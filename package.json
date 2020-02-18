@@ -23,11 +23,12 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint:check": "./node_modules/.bin/eslint './src/**/*.{tsx,ts}'",
-    "lint:fix": "./node_modules/.bin/eslint --fix './src/**/*.{tsx,ts}'"
+    "lint:fix": "./node_modules/.bin/eslint --fix './src/**/*.{tsx,ts}'",
+    "type-check": "./node_modules/.bin/tsc"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run && npm run lint:check"
+      "pre-commit": "npm run type-check && npm run lint:check"
     }
   },
   "browserslist": {
