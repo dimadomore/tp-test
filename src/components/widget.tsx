@@ -3,18 +3,21 @@ import styled from 'styled-components';
 
 import { DatePicker, MainText, SecondaryText, SubmitButton } from '.';
 import useDimensions from '../hooks/use-width';
-import { getColor } from '../helpers';
+import { getColor, translate } from '../helpers';
 
 interface IApp {
   bgColor?: string;
   textColor?: string;
   btnColor?: string;
+  locale?: 'en-GB';
 }
 
-const Widget: React.FC<IApp> = ({ bgColor, textColor, btnColor }) => {
+const Widget: React.FC<IApp> = ({ bgColor, textColor, btnColor, locale = 'en-GB' }) => {
   const [ref, containerWidth] = useDimensions();
   const [departDate, setDepartDate] = useState<Date>();
   const [returnDate, setReturnDate] = useState<Date>();
+
+  const t = translate(locale);
 
   const handleDepartDateChange = useCallback((date: Date) => {
     setDepartDate(date);
@@ -36,25 +39,28 @@ const Widget: React.FC<IApp> = ({ bgColor, textColor, btnColor }) => {
 
   return (
     <Container bgColor={bgColor} ref={ref} className={responsiveClassName}>
-      <MainText color={textColor}>Where does it come from? Why do we use it?</MainText>
+      <MainText color={textColor}>{t('Where does it come from? Why do we use it?')}</MainText>
       <GridContainer className={responsiveClassName}>
         <SecondaryText color={textColor}>
-          It is a long established fact that a reader will be distracted by the readable content of
-          a page when looking at its layout.
+          {t(
+            'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.',
+          )}
         </SecondaryText>
         <DatePicker
           value={departDate}
           onChange={handleDepartDateChange}
-          placeholder="Depart date"
+          placeholder={t('Depart date')}
           maxDate={returnDate}
+          locale={locale}
         />
         <DatePicker
           value={returnDate}
           onChange={handleReturnDateChange}
-          placeholder="Return date"
+          placeholder={t('Return date')}
           minDate={departDate}
+          locale={locale}
         />
-        <SubmitButton bgColor={btnColor}>Search</SubmitButton>
+        <SubmitButton bgColor={btnColor}>{t('Search')}</SubmitButton>
       </GridContainer>
     </Container>
   );

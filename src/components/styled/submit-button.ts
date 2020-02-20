@@ -8,6 +8,7 @@ export default styled.button<{ bgColor?: string }>`
   text-transform: uppercase;
   height: 40px;
   min-height: 40px;
+  letter-spacing: 1.11px;
   line-height: 40px;
   width: 100%;
   font-size: 20px;

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
+import { DayPickerProps } from 'react-day-picker';
 
 import { ReactComponent as CalendarIcon } from '../assets/icons/calendar.svg';
 
@@ -13,10 +14,19 @@ interface IDatePicker {
   format?: string;
   minDate?: Date;
   maxDate?: Date;
+  locale?: string;
 }
 
 const DatePicker: React.FC<IDatePicker> = React.memo(
-  ({ value, onChange, placeholder = 'Select a date', format = 'dd.mm.yyyy', minDate, maxDate }) => {
+  ({
+    value,
+    onChange,
+    placeholder = 'Select a date',
+    format = 'dd.mm.yyyy',
+    minDate,
+    maxDate,
+    locale,
+  }) => {
     return (
       <Container>
         <DayPickerInput
@@ -25,7 +35,8 @@ const DatePicker: React.FC<IDatePicker> = React.memo(
           dayPickerProps={
             {
               disabledDays: { before: minDate, after: maxDate },
-            } as any
+              locale,
+            } as DayPickerProps
           }
           format={format}
           formatDate={formatDate}

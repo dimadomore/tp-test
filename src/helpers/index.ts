@@ -1,3 +1,5 @@
+import { translate } from './i18n';
+
 const isColor = (strColor: string): boolean => {
   var s = new Option().style;
   s.color = strColor;
@@ -25,7 +27,7 @@ const formatDate = (date: Date) => {
   return `${dd}.${mm}.${yyyy}`;
 };
 
-const addFontLink = () => {
+const addEnternalFontLink = () => {
   const link = document.createElement('link');
   const fontLink = 'https://fonts.googleapis.com/css?family=Open+Sans:600&display=swap';
 
@@ -34,4 +36,4 @@ const addFontLink = () => {
   document.head.appendChild(link);
 };
 
-export { getColor, getNodeWidth, formatDate, addFontLink };
+export { getColor, getNodeWidth, formatDate, addEnternalFontLink, translate };
