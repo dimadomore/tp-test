@@ -1,12 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
 
+import { Widget } from './components';
+import { addFontLink } from './helpers';
+
+addFontLink();
 const widget = document.getElementById('tp-widget');
 
 if (widget) {
   const params = { ...widget.dataset };
 
-  ReactDOM.render(<App {...params} />, document.getElementById('tp-widget'));
+  ReactDOM.render(<Widget {...params} />, document.getElementById('tp-widget'));
 }
