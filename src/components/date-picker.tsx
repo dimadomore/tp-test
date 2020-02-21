@@ -3,8 +3,7 @@ import styled from 'styled-components';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import { DayPickerProps } from 'react-day-picker';
 
-import { ReactComponent as CalendarIcon } from '../assets/icons/calendar.svg';
-
+import { CalendarIcon } from './svg';
 import { formatDate } from '../helpers';
 
 interface IDatePicker {
@@ -45,7 +44,7 @@ const DatePicker: React.FC<IDatePicker> = React.memo(
             value,
           }}
         />
-        <CalendarIcon className="calendar-icon" />
+        {CalendarIcon}
       </Container>
     );
   },
@@ -60,7 +59,7 @@ const Container = styled.div`
 
   .DayPicker {
     display: inline-block;
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 
   .DayPicker-wrapper {
@@ -78,8 +77,8 @@ const Container = styled.div`
 
   .DayPicker-Month {
     display: table;
-    margin: 0 1em;
-    margin-top: 1em;
+    margin: 0 0.5em;
+    margin-top: 0.5em;
     border-spacing: 0;
     border-collapse: collapse;
     user-select: none;
@@ -163,7 +162,7 @@ const Container = styled.div`
 
   .DayPicker-Day {
     display: table-cell;
-    padding: 0.5em;
+    padding: 0.3em;
     border-radius: 50%;
     vertical-align: middle;
     text-align: center;
@@ -245,21 +244,21 @@ const Container = styled.div`
 
     input {
       cursor: pointer;
-      margin: 0;
-      border: 0;
+      margin: 0 !important;
+      border: 0 !important;
       padding: 0;
       display: inline-block;
       vertical-align: middle;
       white-space: normal;
-      background: white;
-      line-height: 40px;
-      font-size: 14px;
+      background: white !important;
+      line-height: 40px !important;
+      font-size: 14px !important;
       padding-left: 10px;
       padding-right: 35px;
       font-family: Open Sans;
       width: 100%;
       border-radius: 2px;
-      height: 40px;
+      height: 40px !important;
       min-height: 40px;
       outline: none;
 
@@ -276,7 +275,7 @@ const Container = styled.div`
   .DayPickerInput-Overlay {
     position: absolute;
     left: 0;
-    top: 10px;
+    top: 7px;
     z-index: 1;
 
     background: white;

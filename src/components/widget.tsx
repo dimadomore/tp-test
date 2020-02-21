@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { DatePicker, MainText, SecondaryText, SubmitButton } from '.';
 import useDimensions from '../hooks/use-width';
-import { getColor, translate } from '../helpers';
+import { getColor, translate, widgetContainerBreakpoints, formatDate } from '../helpers';
 
 interface IApp {
   bgColor?: string;
@@ -27,11 +27,21 @@ const Widget: React.FC<IApp> = ({ bgColor, textColor, btnColor, locale = 'en-GB'
     setReturnDate(date);
   }, []);
 
+  const sendFormRequest = (departDate: string, returnDate: string) => {
+    console.log(departDate, returnDate);
+  };
+
+  const handleSubmit = useCallback(() => {
+    if (departDate && returnDate) {
+      sendFormRequest(formatDate(departDate), formatDate(returnDate));
+    }
+  }, [departDate, returnDate]);
+
   const responsiveClassName = useMemo(() => {
     if (containerWidth) {
-      if (containerWidth > 902) return 'lg';
-      if (containerWidth > 710) return 'md';
-      if (containerWidth > 430) return 'sm';
+      if (containerWidth > widgetContainerBreakpoints.lg) return 'lg';
+      if (containerWidth > widgetContainerBreakpoints.md) return 'md';
+      if (containerWidth > widgetContainerBreakpoints.sm) return 'sm';
       return 'xs';
     }
     return '';
@@ -60,7 +70,9 @@ const Widget: React.FC<IApp> = ({ bgColor, textColor, btnColor, locale = 'en-GB'
           minDate={departDate}
           locale={locale}
         />
-        <SubmitButton bgColor={btnColor}>{t('Search')}</SubmitButton>
+        <SubmitButton onClick={handleSubmit} bgColor={btnColor}>
+          {t('Search')}
+        </SubmitButton>
       </GridContainer>
     </Container>
   );
@@ -71,7 +83,7 @@ export default Widget;
 /* Styled components
    =========================================================================== */
 const Container = styled.div<{ bgColor?: string }>`
-  box-sizing: border-box;
+  box-sizing: border-box !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -ms-text-size-adjust: 100%;
@@ -83,7 +95,7 @@ const Container = styled.div<{ bgColor?: string }>`
   *:after {
     -webkit-box-sizing: inherit;
     -moz-box-sizing: inherit;
-    box-sizing: inherit;
+    box-sizing: inherit !important;
   }
 
   background-color: ${({ bgColor }) => getColor('#4a90e2', bgColor)};
@@ -138,6 +150,7 @@ const GridContainer = styled.div`
 
     ${SubmitButton} {
       margin-left: 8px;
+      width: 96%;
     }
   }
   &.sm {

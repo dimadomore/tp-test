@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { getColor } from '../../helpers';
 
 export default styled.button<{ bgColor?: string }>`
-  background-color: ${({ bgColor }) => getColor('#f5a623', bgColor)};
+  background-color: ${({ bgColor }) => getColor('#f5a623', bgColor)} !important;
   border-radius: 2px;
   text-transform: uppercase;
   height: 40px;
@@ -11,9 +11,9 @@ export default styled.button<{ bgColor?: string }>`
   letter-spacing: 1.11px;
   line-height: 40px;
   width: 100%;
-  font-size: 20px;
-  border: 0;
-  padding: 0;
+  font-size: 20px !important;
+  border: 0 !important;
+  padding: 0 !important;
   color: #ffffff;
   box-shadow: inset 0px -2px 0px 0px rgba(0, 0, 0, 0.1);
   cursor: pointer;

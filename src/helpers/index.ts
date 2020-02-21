@@ -36,4 +36,18 @@ const addEnternalFontLink = () => {
   document.head.appendChild(link);
 };
 
-export { getColor, getNodeWidth, formatDate, addEnternalFontLink, translate };
+// using pixels
+const widgetContainerBreakpoints = {
+  lg: 902,
+  md: 710,
+  sm: 430,
+};
+
+export {
+  getColor,
+  getNodeWidth,
+  formatDate,
+  addEnternalFontLink,
+  translate,
+  widgetContainerBreakpoints,
+};
