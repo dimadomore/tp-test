@@ -30,22 +30,20 @@ module.exports = function(webpackEnv) {
     optimization: {
       minimize: isEnvProduction,
       minimizer: [
-        // This is only used in production mode
         new TerserPlugin({
           terserOptions: {
             parse: {
               ecma: 8,
             },
             compress: {
-              ecma: 5,
+              ecma: 6,
               warnings: false,
               comparisons: false,
               inline: 2,
             },
             output: {
-              ecma: 5,
+              ecma: 6,
               comments: false,
-              ascii_only: true,
             },
           },
           sourceMap: false,
@@ -154,10 +152,6 @@ module.exports = function(webpackEnv) {
           async: isEnvDevelopment,
           useTypescriptIncrementalApi: true,
           checkSyntacticErrors: true,
-          // resolveModuleNameModule: process.versions.pnp ? `${__dirname}/pnpTs.js` : undefined,
-          // resolveTypeReferenceDirectiveModule: process.verssions.pnp
-          // ? `${__dirname}/pnpTs.js`
-          // : undefined,
           tsconfig: paths.appTsConfig,
           reportFiles: ['**'],
           silent: true,
