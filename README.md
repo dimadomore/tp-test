@@ -8,7 +8,7 @@
 ```
 git clone https://github.com/dimavasilyev/tp-test.git
 
-npm i && npm run build
+cd tp-test && npm i && npm run build
 ```
 
 После выполнения вышеуказанных команд в проекте появится папка /build c файлом index.html - HTML-страницей с примером вставленного виджета формы, которую можно открыть в браузере.
