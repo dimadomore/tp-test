@@ -2,8 +2,8 @@ import React, { useState, useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 
 import { DatePicker, MainText, SecondaryText, SubmitButton } from '.';
-import useDimensions from '../hooks/use-width';
-import { getColor, translate, widgetContainerBreakpoints, formatDate } from '../helpers';
+import { useContainerWidth, useWindowWidth } from '../hooks';
+import { getColor, translate, widgetContainerBreakpoints, formatDate, media } from '../helpers';
 
 interface IApp {
   bgColor?: string;
@@ -13,7 +13,9 @@ interface IApp {
 }
 
 const Widget: React.FC<IApp> = ({ bgColor, textColor, btnColor, locale = 'en-GB' }) => {
-  const [ref, containerWidth] = useDimensions();
+  const [ref, containerWidth] = useContainerWidth();
+  const width = useWindowWidth();
+
   const [departDate, setDepartDate] = useState<Date>();
   const [returnDate, setReturnDate] = useState<Date>();
 
@@ -39,42 +41,43 @@ const Widget: React.FC<IApp> = ({ bgColor, textColor, btnColor, locale = 'en-GB'
 
   const responsiveClassName = useMemo(() => {
     if (containerWidth) {
-      if (containerWidth > widgetContainerBreakpoints.lg) return 'lg';
-      if (containerWidth > widgetContainerBreakpoints.md) return 'md';
-      if (containerWidth > widgetContainerBreakpoints.sm) return 'sm';
-      return 'xs';
+      if (containerWidth <= widgetContainerBreakpoints.xs) return 'xs';
+      if (containerWidth <= widgetContainerBreakpoints.sm) return 'sm';
+      if (containerWidth <= widgetContainerBreakpoints.md) return 'md';
     }
     return '';
   }, [containerWidth]);
 
   return (
-    <Container bgColor={bgColor} ref={ref} className={responsiveClassName}>
-      <MainText color={textColor}>{t('Where does it come from? Why do we use it?')}</MainText>
-      <GridContainer className={responsiveClassName}>
-        <SecondaryText color={textColor}>
-          {t(
-            'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.',
-          )}
-        </SecondaryText>
-        <DatePicker
-          value={departDate}
-          onChange={handleDepartDateChange}
-          placeholder={t('Depart date')}
-          maxDate={returnDate}
-          locale={locale}
-        />
-        <DatePicker
-          value={returnDate}
-          onChange={handleReturnDateChange}
-          placeholder={t('Return date')}
-          minDate={departDate}
-          locale={locale}
-        />
-        <SubmitButton onClick={handleSubmit} bgColor={btnColor}>
-          {t('Search')}
-        </SubmitButton>
-      </GridContainer>
-    </Container>
+    <Wrapper windowWidth={width}>
+      <Container bgColor={bgColor} ref={ref} className={responsiveClassName}>
+        <MainText color={textColor}>{t('Where does it come from? Why do we use it?')}</MainText>
+        <GridContainer className={responsiveClassName}>
+          <SecondaryText color={textColor}>
+            {t(
+              'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.',
+            )}
+          </SecondaryText>
+          <DatePicker
+            value={departDate}
+            onChange={handleDepartDateChange}
+            placeholder={t('Depart date')}
+            maxDate={returnDate}
+            locale={locale}
+          />
+          <DatePicker
+            value={returnDate}
+            onChange={handleReturnDateChange}
+            placeholder={t('Return date')}
+            minDate={departDate}
+            locale={locale}
+          />
+          <SubmitButton onClick={handleSubmit} bgColor={btnColor}>
+            {t('Search')}
+          </SubmitButton>
+        </GridContainer>
+      </Container>
+    </Wrapper>
   );
 };
 
@@ -82,6 +85,10 @@ export default Widget;
 
 /* Styled components
    =========================================================================== */
+const Wrapper = styled.div<{ windowWidth: number }>`
+  width: 100%;
+  max-width: ${({ windowWidth }) => windowWidth}px;
+`;
 const Container = styled.div<{ bgColor?: string }>`
   box-sizing: border-box !important;
   -webkit-font-smoothing: antialiased;
@@ -103,10 +110,8 @@ const Container = styled.div<{ bgColor?: string }>`
   min-width: 200px;
   padding: 0px 20px 15px;
   width: 100%;
+  padding-top: 2px;
 
-  &.lg {
-    padding-top: 2px;
-  }
   &.md {
     padding-top: 3px;
   }
@@ -133,10 +138,8 @@ const Container = styled.div<{ bgColor?: string }>`
 const GridContainer = styled.div`
   display: grid;
   grid-gap: 20px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
 
-  &.lg {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-  }
   &.md {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas:
@@ -183,4 +186,50 @@ const GridContainer = styled.div`
       grid-area: button;
     }
   }
+
+  /* ${media.mediumOnly} {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas:
+      'secondary-text secondary-text secondary-text'
+      'input1 input2 button';
+
+    ${SecondaryText} {
+      grid-area: secondary-text;
+      margin-bottom: -5px;
+    }
+
+    ${SubmitButton} {
+      margin-left: 8px;
+      width: 96%;
+    }
+  }
+  ${media.small} {
+    ${SecondaryText} {
+      grid-area: secondary-text;
+    }
+
+    ${SubmitButton} {
+      grid-area: button;
+    }
+  }
+  ${media.smallOnly} {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      'secondary-text secondary-text'
+      'input1 input2'
+      'button button';
+    ${SecondaryText} {
+      margin-bottom: -5px;
+    }
+  }
+
+  ${media.extraSmall} {
+    grid-template-columns: 1fr;
+    grid-gap: 15px;
+    grid-template-areas:
+      'input1'
+      'input2'
+      'button'
+      'secondary-text';
+  } */
 `;

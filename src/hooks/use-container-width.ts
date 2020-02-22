@@ -3,7 +3,7 @@ import { getNodeWidth } from '../helpers';
 
 type UseDimensionsHook = [RefObject<HTMLDivElement>, number | undefined];
 
-const useWidth = (): UseDimensionsHook => {
+const useContainerWidth = (): UseDimensionsHook => {
   const [width, setWidth] = useState<number>();
 
   const ref = useRef<HTMLDivElement>(null);
@@ -15,14 +15,11 @@ const useWidth = (): UseDimensionsHook => {
       measure();
 
       window.addEventListener('resize', measure);
-
-      return () => {
-        window.removeEventListener('resize', measure);
-      };
+      return () => window.removeEventListener('resize', measure);
     }
   }, []);
 
   return [ref, width];
 };
 
-export default useWidth;
+export default useContainerWidth;

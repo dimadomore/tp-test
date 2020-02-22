@@ -33,7 +33,7 @@ const DatePicker: React.FC<IDatePicker> = React.memo(
           placeholder={placeholder}
           dayPickerProps={
             {
-              disabledDays: { before: minDate, after: maxDate },
+              disabledDays: { before: minDate || new Date(), after: maxDate },
               locale,
             } as DayPickerProps
           }

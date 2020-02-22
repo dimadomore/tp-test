@@ -3,7 +3,7 @@ const paths = require('./paths');
 
 const host = process.env.HOST || '0.0.0.0';
 
-module.exports = function (allowedHost) {
+module.exports = function(allowedHost) {
   return {
     compress: true,
     clientLogLevel: 'none',

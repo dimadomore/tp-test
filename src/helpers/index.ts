@@ -1,22 +1,22 @@
-import { translate } from './i18n';
+export { translate } from './i18n';
 
-const isColor = (strColor: string): boolean => {
+export const isColor = (strColor: string): boolean => {
   var s = new Option().style;
   s.color = strColor;
   return s.color !== '';
 };
 
-const getColor = (defaultColor: string, strColor?: string) => {
+export const getColor = (defaultColor: string, strColor?: string) => {
   if (strColor) {
     return isColor(strColor) ? strColor : defaultColor;
   }
   return defaultColor;
 };
 
-const getNodeWidth = (node: HTMLElement): number => node.getBoundingClientRect().width;
+export const getNodeWidth = (node: HTMLElement): number => node.getBoundingClientRect().width;
 
 // format dd.mm.yyyy
-const formatDate = (date: Date) => {
+export const formatDate = (date: Date) => {
   let dd: number | string = date.getDate();
   let mm: number | string = date.getMonth() + 1;
   const yyyy = date.getFullYear();
@@ -27,7 +27,7 @@ const formatDate = (date: Date) => {
   return `${dd}.${mm}.${yyyy}`;
 };
 
-const addEnternalFontLink = () => {
+export const addEnternalFontLink = () => {
   const link = document.createElement('link');
   const fontLink = 'https://fonts.googleapis.com/css?family=Open+Sans:600&display=swap';
 
@@ -37,17 +37,15 @@ const addEnternalFontLink = () => {
 };
 
 // using pixels
-const widgetContainerBreakpoints = {
-  lg: 902,
-  md: 710,
-  sm: 430,
+export const widgetContainerBreakpoints = {
+  md: 902,
+  sm: 710,
+  xs: 430,
 };
 
-export {
-  getColor,
-  getNodeWidth,
-  formatDate,
-  addEnternalFontLink,
-  translate,
-  widgetContainerBreakpoints,
+export const media = {
+  mediumOnly: `@media (max-width: ${widgetContainerBreakpoints.md}px) and (min-width: ${widgetContainerBreakpoints.sm}px)`,
+  smallOnly: `@media (max-width: ${widgetContainerBreakpoints.sm}px) and (min-width: ${widgetContainerBreakpoints.xs}px)`,
+  small: `@media (max-width: ${widgetContainerBreakpoints.sm}px)`,
+  extraSmall: `@media (max-width: ${widgetContainerBreakpoints.xs}px)`,
 };

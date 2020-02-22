@@ -11,7 +11,7 @@ const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 
 const useTypeScript = fs.existsSync(paths.appTsConfig);
 
-module.exports = function (webpackEnv) {
+module.exports = function(webpackEnv) {
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
 
@@ -133,36 +133,36 @@ module.exports = function (webpackEnv) {
           },
           isEnvProduction
             ? {
-              minify: {
-                removeComments: true,
-                collapseWhitespace: true,
-                removeRedundantAttributes: true,
-                removeEmptyAttributes: true,
-                keepClosingSlash: true,
-                minifyJS: true,
-              },
-            }
+                minify: {
+                  removeComments: true,
+                  collapseWhitespace: true,
+                  removeRedundantAttributes: true,
+                  removeEmptyAttributes: true,
+                  keepClosingSlash: true,
+                  minifyJS: true,
+                },
+              }
             : undefined,
         ),
       ),
       isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
       useTypeScript &&
-      new ForkTsCheckerWebpackPlugin({
-        typescript: resolve.sync('typescript', {
-          basedir: paths.appNodeModules,
+        new ForkTsCheckerWebpackPlugin({
+          typescript: resolve.sync('typescript', {
+            basedir: paths.appNodeModules,
+          }),
+          async: isEnvDevelopment,
+          useTypescriptIncrementalApi: true,
+          checkSyntacticErrors: true,
+          // resolveModuleNameModule: process.versions.pnp ? `${__dirname}/pnpTs.js` : undefined,
+          // resolveTypeReferenceDirectiveModule: process.verssions.pnp
+          // ? `${__dirname}/pnpTs.js`
+          // : undefined,
+          tsconfig: paths.appTsConfig,
+          reportFiles: ['**'],
+          silent: true,
+          formatter: isEnvProduction ? typescriptFormatter : undefined,
         }),
-        async: isEnvDevelopment,
-        useTypescriptIncrementalApi: true,
-        checkSyntacticErrors: true,
-        // resolveModuleNameModule: process.versions.pnp ? `${__dirname}/pnpTs.js` : undefined,
-        // resolveTypeReferenceDirectiveModule: process.verssions.pnp
-        // ? `${__dirname}/pnpTs.js`
-        // : undefined,
-        tsconfig: paths.appTsConfig,
-        reportFiles: ['**'],
-        silent: true,
-        formatter: isEnvProduction ? typescriptFormatter : undefined,
-      }),
     ].filter(Boolean),
     performance: false,
   };
