@@ -18,6 +18,17 @@ npm i && npm run build
 1. Необходимо создать html контейнер с id="tp-widget" (```<div id="tp-widget"></div>```)
 2. Небходимо вставить скрипт обязательно после html контейнера (```<script src="адрес скрипта">```)
 
+Пример кастомизации
+
+```
+  <div
+    id="tp-widget" 
+    data-locale="en-GB" 
+    data-bg-color="orange" 
+    data-text-color="blue" 
+    data-btn-color="green"
+  />
+```
 ### Использованные технологии
 
 - React
