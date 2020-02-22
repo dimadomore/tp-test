@@ -17,10 +17,10 @@ npm i && npm run build
 
 - React
 - TypeScript
-- React Day Picker
 - Webpack
 - SVG
 - ~~PostCSS~~ Styled Components (с обоснованием)
+- React Day Picker
 
 ### Итоги
 

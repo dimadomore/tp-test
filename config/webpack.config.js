@@ -25,7 +25,7 @@ module.exports = function(webpackEnv) {
       pathinfo: isEnvDevelopment,
       filename: 'static/js/tp-widget.js',
       futureEmitAssets: true,
-      publicPath: paths.publicUrlOrPath,
+      publicPath: `.${paths.publicUrlOrPath}`,
     },
     optimization: {
       minimize: isEnvProduction,
